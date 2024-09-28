@@ -3,9 +3,20 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>뷰 기초 익히기</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 </head>
 <body>
-  
+  <div id="app">
+    {{ this.name }}
+  </div>
+  <script>
+    new Vue({
+      el: '#app',
+      data:{
+        name: '유혁스쿨'
+      }
+    })
+  </script>
 </body>
 </html>
