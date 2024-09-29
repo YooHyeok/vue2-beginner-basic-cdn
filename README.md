@@ -29,6 +29,73 @@ Vue 컴포넌트는 Vue 인스턴스의 상태, 메소드, 속성 등을 하나�
 - Vue의 일관성  
 data, methods, computed, watch 등 모든 옵션들이 Vue 인스턴스의 프로퍼티로 바인딩되므로, this를 통해 접근하게 하여 일관된 API 설계를 제공한다.
 
+<br>
+
+### Context(문맥, 맥락) 이란?
+<details>
+<summary>펼치기/접기</summary>
+
+Javscript에서 Context란 함수나 메소드가 호출될 때 그 안에서 this가 어떤 객체를 가리키는지를 결정하는 개념이다.  
+this는 현재 실행중인 함수가 "어떤 객체에 속해 있는지", 또는 그 함수가 호출된 방식에 따라 달라진다.
+
+1. 전역 컨텍스트에서 this  
+  전역 범우에서 this는 전역 객체를 가리킨다.  
+  브라우저 환경에서는 window 객체가 전역 객체이다.
+    ```js
+    console.log(this) // 전역에서 실행, 브라우저에서는 'window' 객체 출력
+    ```
+
+2. 객체 메소드에서의 this  
+    객체 메소드에서 this는 그 메소드가 속한 객체를 가리킨다.
+    ```js
+    const person = {
+      name: 'YooHyeok',
+      greet() {
+        console.log(this.name); // 'this'는 person 객체를 가리킨다.
+      }
+    }
+    person.greet(); // "YooHyeok" 출력
+    ```
+    위 코드에서 this는 person 객체의 맥락을 가리키며, person 객체의 속성인 name에 접근한다.
+
+3. **함수에서의 this  
+  함수 내에서 this는 호출 방법에 따라 달라진다.  
+  기본적으로 함수는 전역 컨텍스트에서 호출되며, this는 전역 객체를 가리킨다.
+    ```js
+    function func() {
+      console.log(this); //전역 객체를 가리킨다. (브라우저에서는 `window`)
+    }
+    func(); // 전역에서 호출, 전역 객체 출력
+    ```
+4. call이나 apply로 맥락을 명시적으로 설정  
+  call()이나 apply() 메소드를 사용하면 함수를 호출할 때 this를 특정 객체로 지정할 수 있다.  
+    ```js
+    function greet() {
+      console.log(this.name)
+    }
+    const person = {
+      name: 'Bob'
+    };
+
+    greet.call(person) // `this`를 `person` 객체로 설정, "BOb" 출력
+    ```
+    초기 선언시점에서 greet 함수는 전역에 정의되어 있지만, call()을 사용해 this를 person 객체로 지정하였다.  
+    따라서 greet 함수 내에서 this.name은 person을 참조하게 된다.  
+5. 생성자 함수에서의 this  
+  생성자 함수에서는 this가 새로 생성된 객체를 기리킨다.  
+    ```js
+    function Person(name) {
+      this.name = name;
+    }
+
+    const alice = new Person('Alice');
+    console.log(alice.name); // "Alice" 출력
+    ```
+    this는 Person을 가리킨다.
+
+</details>
+<br>
+
 ## 템플릿에서 this를 생략하는 이유
 Vue 템플릿에서 this를 생략할 수 있는 이유는 Vue의 템플릿 컴파일러가 이를 자동으로 처리하기 떄문이다.  
 - Vue 템플릿은 렌더링 단계에서 Javascript 함수로 컴파일 된다.  
