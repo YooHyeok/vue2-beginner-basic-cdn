@@ -9,6 +9,9 @@
 <body>
   <div id="app">
     {{ nextYear('안녕하세요') }}
+    <input v-bind:type="type" v-bind:value="inputData">
+    <!-- v-bind:속성 은 :속성 과 같이 생략 표현이 가능하다. -->
+    <a :href="getYooHyeokSchoolLink('u-it')">유혁스쿨 블로그</a>
   </div>
   <script>
     new Vue({
@@ -17,9 +20,15 @@
         person: {
           name: '유혁스쿨',
           age: 33
-        }
+        },
+        inputData: 'merong',
+        type: 'text',
+        link: 'https://'
       },
       methods: {
+        getYooHyeokSchoolLink(key) {
+          return this.link + key + ".tistory.com";
+        },
         nextYear: function (greeting) {
           return greeting + '! ' + this.person.name + ' 은 내년에 ' + (this.person.age + 1) + '살 입니다.'
         }
