@@ -139,24 +139,47 @@ Dom element 속성에 값을 바인딩 시켜준다.
 a 태그로 예시 코드를 작성한다.  
 ```vue
 <template>
-  <a v-bind:src="link" v-bind:value="value">
-  <a :src="link" :value="value"> <!-- 축약형 -->
+  <a v-bind:href="link"> {{ title }} </a>
+  <a :href="link"> {{ title }} </a> <!-- 축약형 -->
 </template>
 <script>
-    new Vue({
-      el: '#app',
-      data:{
-        value: '유혁스쿨 티스토리 블로그',
-        link: 'https://u-it.tistory.com',        
-      },
-    })
-  </script>
+  new Vue({
+    el: '#app',
+    data:{
+      title: '유혁스쿨 티스토리 블로그',
+      link: 'https://u-it.tistory.com',        
+    },
+  })
+</script>
 ```
 <a href="https://u-it.tistory.com" >유혁스쿨 티스토리 블로그</a>
 
+## Method 바인딩
+return 형태의 메소드 바인딩도 가능하다.
+```vue
+<template>
+  <a :href="getYooHyeokSchoolLink('u-it')"> {{ title }} </a> <!-- 축약형 -->
+</template>
+<script>
+  new Vue({
+    el: '#app',
+    data:{
+      value: '유혁스쿨 티스토리 블로그',
+      linkPrefix: 'https://',        
+      linkSuffix: '.tistory.com',        
+    },
+     methods: {
+        getYooHyeokSchoolLink(key) {
+          return this.linkPrefix + key + this.linkSuffix;
+        }
+      }
+  })
+</script>
+```
+
 ## Object 바인딩 (Attributes, Props)
 
-v-bind를 통해 Attribute 혹은 Props에 Object 형태로 바인딩이 가능하다.
+v-bind를 통해 Attribute 혹은 Props에 Object 형태로 바인딩이 가능하다.  
 *단, 축약형은 적용되지 않는다. (콘솔 Error 발생)*
 
 - ### Attributes
@@ -177,7 +200,7 @@ v-bind를 통해 Attribute 혹은 Props에 Object 형태로 바인딩이 가능�
   </script>
   ```
 
-  브라우저 출력 결과 : <input type="number" value="33">
+  브라우저 출력 결과 : `<input type="number" value="33">`
 
   이는 리액트에서도 spread attributes 문법을 통해 동일하게 적용된다.
   ```jsx
