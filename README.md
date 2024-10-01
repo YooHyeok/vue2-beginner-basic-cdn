@@ -153,3 +153,99 @@ a 태그로 예시 코드를 작성한다.
   </script>
 ```
 <a href="https://u-it.tistory.com" >유혁스쿨 티스토리 블로그</a>
+
+## Object 바인딩 (Attributes, Props)
+
+v-bind를 통해 Attribute 혹은 Props에 Object 형태로 바인딩이 가능하다.
+*단, 축약형은 적용되지 않는다. (콘솔 Error 발생)*
+
+- ### Attributes
+  ```vue
+  <template>
+    <input v-bind="inputAttr">
+  </template>
+  <script>
+    new Vue({
+      el: '#app',
+      data: {
+        inputAttr: {
+          type: 'number',
+          value: '33',
+        }
+      },
+    })
+  </script>
+  ```
+
+  브라우저 출력 결과 : <input type="number" value="33">
+
+  이는 리액트에서도 spread attributes 문법을 통해 동일하게 적용된다.
+  ```jsx
+  import { useState } from 'react';
+
+  function app() {
+    const [inputAttr, setInputAttr] = useState({ type: 'number', value: '33' }) 
+    return (
+      <input {...inputAttr}>
+    )
+  }
+  ```
+
+  - ### Props
+  Object 바인딩의 경우 커스텀 컴포넌트에 Props로 넘길수도 있다.  
+  특징은, 부모 컴포넌트에서 v-bind 적용시 속성명을 입력하지 않을 경우 해당 Object의 각 property가  
+  개별적으로 props로 넘어간다.
+
+  ```vue
+  <template>
+    <ExComponent v-bind="propsInputAttrProps">
+  </template>
+  <script>
+    new Vue({
+      el: '#app',
+      data:{
+        propsInputAttrProps: {
+          type: 'number',
+          value: '33',
+        }
+      },
+    })
+  </script>
+  ```
+
+  ```js
+  const html = String.raw; // 템플릿 구문강조 - Vue VSCode Snippets 플러그인 설치 후 사용
+
+  Vue.component('ex-component', {
+    template: html`
+      <input v-bind:type="type" bind:value="value">{{ message }}</input>
+    `,
+    name: "ExComponent"
+    props: {
+      type: String,
+      value: Number
+    },
+  });
+  ```
+  
+  
+  *주의할 점은 속성명과 props변수명이 일치한다고 하더라도 v-bind로 적용할때 속성명을 꼭 입력해줘야 한다.*  
+
+  이는 리액트에서도 spread attributes 문법을 통해 동일하게 적용된다.
+  ```jsx
+  import { useState } from 'react';
+
+  function app() {
+    const [propsInputAttrProps, setPropsInputAttrProps] = useState({ type: 'number', value: '33' }) 
+    return (
+      <ExComponent {...propsInputAttrProps}>
+    )
+  }
+  ```
+  ```jsx
+  function ExComponent({type, value}) {
+    return (
+      <input type={type} value={value}>
+    )
+  }
+  ```
