@@ -1,6 +1,4 @@
-# vue-begginer-basic-cdn
-
-# data와 this
+# *data와 this*
 Vue 인스턴스에서 data 속성에 정의된 State(상태)는 Vue 인스턴스의 프로퍼티로 등록된다.  
 this는 해당 Vue 인스턴스를 가리키며, 인스턴스의 모든 속성 및 메서드에 접근할 수 있다.  
 - Vue는 내부적으로 data 속성에 정의된 모든 상태를 Vue 인스턴스의 프로퍼티로 프로토타입 체인을 통해 연결한다.  
@@ -133,3 +131,25 @@ Vue 인스턴스가 생성될 때 data 속성은 인스턴스의 프로퍼티로
 - 템플릿에서 this 생략  
 Vue 템플릿 컴파일러가 자동으로 this를 처리하기 때문에 템플릿에서 this를 명시하지 않아도 Vue 인스턴스의 속성에 접근할 수 있다.  
 이는 가독성을 높이고 코드를 간결하게 만들기 위한 설계이다.
+
+# *v-bind*
+Dom element 속성에 값을 바인딩 시켜준다.  
+`v-bind:속성=값` 혹은 축약형인 `:속성=값` 형태로 사용한다.  
+
+a 태그로 예시 코드를 작성한다.  
+```vue
+<template>
+  <a v-bind:src="link" v-bind:value="value">
+  <a :src="link" :value="value"> <!-- 축약형 -->
+</template>
+<script>
+    new Vue({
+      el: '#app',
+      data:{
+        value: '유혁스쿨 티스토리 블로그',
+        link: 'https://u-it.tistory.com',        
+      },
+    })
+  </script>
+```
+<a href="https://u-it.tistory.com" >유혁스쿨 티스토리 블로그</a>
