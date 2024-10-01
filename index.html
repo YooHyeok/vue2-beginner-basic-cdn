@@ -8,11 +8,48 @@
 </head>
 <body>
   <div id="app">
+    
+    <h1>state - data</h1>
     {{ nextYear('안녕하세요') }}
-    <input v-bind:type="type" v-bind:value="inputData">
-    <input v-bind="inputAttr">
-    <!-- v-bind:속성 은 :속성 과 같이 생략 표현이 가능하다. -->
-    <a :href="getYooHyeokSchoolLink('u-it')">유혁스쿨 블로그</a>
+
+    <!-- v-bind -->
+    <details>
+      <summary style="font-size: 30px; font-weight: bold; font-style: italic;">v-bind</summary>
+  
+      <h3>기본 { v-bind:속성="변수" }</h3>
+      <input v-bind:type="type" v-bind:value="inputValue">
+
+      <h3>축약 { :속성="변수" }</h3>
+      <input :type="type" :value="inputValue">
+
+      <h3>함수 바인딩 { v-bind:속성="함수" }</h3>
+      <a :href="getYooHyeokSchoolLink('u-it')">유혁스쿨 블로그</a>
+
+      <h3>Object 바인딩: { v-bind="속성명" }</h3>
+      <input v-bind="inputAttr"> {{this.inputValue}}
+    </details>
+    <!-- event -->
+    <details open>
+      <summary style="font-size: 30px; font-weight: bold; font-style: italic;">Event</summary>
+    <h3>JS 기본</h3>
+    <button onclick="alert('Hello - YooHyeokSchool')">Click Me</button>
+    <h3>Vue 방식</h3>
+    <button v-on:click="alert('Hello - YooHyeokSchool')">Click Me</button>
+    <h4>축약형 @</h4>
+    <button @click="alert('Hello - YooHyeokSchool')">Click Me</button>
+    <h3>사용불가 예제 - template에서 전역 객체를 직접 참조할 수 없음.</h3>
+    <button v-on:click="() => { window.alert('Hello - YooHyeokSchool'); }">Click Me</button>
+    <button v-on:click="() => { console.log('Hello - YooHyeokSchool'); }">Click Me</button>
+    <h3>예제1</h3>
+    <button v-on:click="plus()">나이 증가</button>
+    <button v-on:click="minus()">나이 감소</button>
+    <h3>예제2</h3>
+    <form v-on:submit.prevent="submit">
+      <input type="text" name="param1">
+      <a :href="getYooHyeokSchoolLink('u-it')">유혁스쿨 블로그</a>
+      <button type="submit">전송</button>
+    </form>
+    </details>
   </div>
   <script>
     new Vue({
@@ -32,6 +69,29 @@
         
       },
       methods: {
+        submit(e) {
+          // e.preventDefault(); [이벤트 수식어] v-on.submit.prevent로 대체 가능
+          const formData = new FormData(e.target);
+          console.log(formData)
+          const param = {};
+
+            // FormData에서 name과 value 추출
+            formData.forEach((value, key) => {
+              console.log(key)
+                param[key] = value; // key를 name으로, value를 value로 설정
+            });
+
+            console.log(param); // 결과 확인
+        },
+        plus() {
+          this.person.age++;
+        },
+        minus() {
+          this.person.age--;
+        },
+        alert(msg) {
+          alert(msg);
+        },
         getYooHyeokSchoolLink(key) {
           return this.link + key + ".tistory.com";
         },
