@@ -32,14 +32,13 @@
     <details open>
       <summary style="font-size: 30px; font-weight: bold; font-style: italic;">Event</summary>
     <h3>JS 기본</h3>
-    <button onclick="alert('Hello - YooHyeokSchool')">Click Me</button>
-    <h3>Vue 방식</h3>
-    <button v-on:click="alert('Hello - YooHyeokSchool')">Click Me</button>
-    <h4>축약형 @</h4>
-    <button @click="alert('Hello - YooHyeokSchool')">Click Me</button>
+    <button onclick="alert('Hello - YooHyeokSchool')">onclick</button>
+    <h3>Vue 기본 & 축약형</h3>
+    <button v-on:click="alert('Hello - YooHyeokSchool')">v-on:click</button>
+    <button @click="alert('Hello - YooHyeokSchool')">@click</button>
     <h3>사용불가 예제 - template에서 전역 객체를 직접 참조할 수 없음.</h3>
-    <button v-on:click="() => { window.alert('Hello - YooHyeokSchool'); }">Click Me</button>
-    <button v-on:click="() => { console.log('Hello - YooHyeokSchool'); }">Click Me</button>
+    <button v-on:click="() => { window.alert('Hello - YooHyeokSchool'); }">window.alert</button>
+    <button v-on:click="() => { console.log('Hello - YooHyeokSchool'); }">console.log</button>
     <h3>예제1</h3>
     <button v-on:click="plus()">나이 증가</button>
     <button v-on:click="minus()">나이 감소</button>
