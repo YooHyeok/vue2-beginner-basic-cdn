@@ -142,8 +142,10 @@
   a 태그로 예시 코드를 작성한다.  
   ```js
   <body>
-    <a v-bind:href="link"> {{ title }} </a>
-    <a :href="link"> {{ title }} </a> <!-- 축약형 -->
+    <div id="app">
+      <a v-bind:href="link"> {{ title }} </a>
+      <a :href="link"> {{ title }} </a> <!-- 축약형 -->
+    </div>
     <script>
       new Vue({
         el: '#app',
@@ -161,7 +163,9 @@
   return 형태의 메소드 바인딩도 가능하다.
   ```js
   <body>
-    <a :href="getYooHyeokSchoolLink('u-it')"> {{ title }} </a> <!-- 축약형 -->
+    <div id="app">
+      <a :href="getYooHyeokSchoolLink('u-it')"> {{ title }} </a> <!-- 축약형 -->
+    </div>
     <script>
       new Vue({
         el: '#app',
@@ -189,7 +193,9 @@
     ```js
     <!-- 생략 -->
     <body>
-      <input v-bind="inputAttr">
+      <div id="app">
+        <input v-bind="inputAttr">
+      </div>
       <script>
         new Vue({
           el: '#app',
@@ -225,7 +231,9 @@
 
     ```js
     <body>
-      <ExComponent v-bind="propsInputAttrProps">
+      <div id="app">
+        <ExComponent v-bind="propsInputAttrProps">
+      </div>
       <script>
         new Vue({
           el: '#app',
@@ -296,7 +304,9 @@
 
   ```js
   <body>
-    <button type="alert">Alert!</button>
+    <div id="app">
+      <button type="alert">Alert!</button>
+    </div>
     <script>
       new Vue({
         el: '#app',
@@ -318,7 +328,7 @@
   
   # 단방향
   JavaScript → HTML 한 방향으로만 데이터를 동기화 하는 것을 의미한다.  
-  value와 event를 함께 바인딩한디.  
+  value와 event를 함께 바인딩한다.  
   keyup 혹은 change 등의 이벤트 함수를 통해 target value에 접근하여 value에 바인딩한 변수를 초기화한다.  
   ```js
   <body>
@@ -336,6 +346,29 @@
           updateText(e) {
             this.onewWayBinding = e.target.value
           },
+        },
+      })
+    </script>
+  </body>
+  ```
+  
+  # 양방향
+  JavaScript ↔ HTML 양쪽 방향으로 데이터를 동기화 하는 것을 의미한다.  
+  JavaScript ↔ HTML 사이 ViewModel을 통해 하나로 묶여 바인딩 됨으로써, 둘 중 하나만 변경되어도 함께 변경된다.  
+  단방향 에서 event와 같은 js 코드가 필요없이 ViewModel로 사용될 state 변수 하나만 사용한다.
+  v-model 속성을 사용한다.  
+  `v-model=state변수명`
+  ```js
+  <body>
+    <div id="app">
+      <input type="text" v-model="twowWayBinding"> <br>
+      {{ twowWayBinding }} <br>
+    </div>
+    <script>
+      new Vue({
+        el: '#app',
+        data: {
+          twowWayBinding: 'text',
         },
       })
     </script>
