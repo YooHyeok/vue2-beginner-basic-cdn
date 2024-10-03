@@ -313,6 +313,38 @@
 
 <details>
   <summary style="font-size:30px; font-weight:bold; font-style:italic;">
+    데이터 바인딩과 v-model
+  </summary>
+  
+  # 단방향
+  JavaScript → HTML 한 방향으로만 데이터를 동기화 하는 것을 의미한다.  
+  value와 event를 함께 바인딩한디.  
+  keyup 혹은 change 등의 이벤트 함수를 통해 target value에 접근하여 value에 바인딩한 변수를 초기화한다.  
+  ```js
+  <body>
+    <div id="app">
+      <input type="text" :value="onewWayBinding" v-on:keyup="updateText"> <br>
+      {{ onewWayBinding }} <br>
+    </div>
+    <script>
+      new Vue({
+        el: '#app',
+        data: {
+          onewWayBinding: 'text',
+        },
+        methods: {
+          updateText(e) {
+            this.onewWayBinding = e.target.value
+          },
+        },
+      })
+    </script>
+  </body>
+  ```
+
+</details>
+<details>
+  <summary style="font-size:30px; font-weight:bold; font-style:italic;">
     목차 접은글 기본 템플릿
   </summary>
 
