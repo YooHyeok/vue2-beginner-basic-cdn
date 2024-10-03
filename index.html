@@ -48,23 +48,33 @@
         <a :href="getYooHyeokSchoolLink('u-it')">유혁스쿨 블로그</a>
         <button type="submit">전송</button>
       </form>
-  </details>
-  <details open>
-    <summary style="font-size: 30px; font-weight: bold; font-style: italic;">데이터 바인딩</summary>
-    
-    <h3>단방향 예제</h3>
-    <input type="text" :value="onewWayBinding" v-on:keyup="updateText"> <br>
-    {{ onewWayBinding }} <br>
+    </details>
+    <details open>
+      <summary style="font-size: 30px; font-weight: bold; font-style: italic;">데이터 바인딩</summary>
+      
+      <h3>단방향 예제</h3>
+      <input type="text" :value="onewWayBinding" v-on:keyup="updateText"> <br>
+      {{ onewWayBinding }} <br>
 
-    <h3>양방향 예제</h3>
-    <input type="text" v-model="twowWayBinding"> <br>
-    {{ twowWayBinding }} <br>
-  </details>
+      <h3>양방향 예제</h3>
+      <input type="text" v-model="twowWayBinding"> <br>
+      {{ twowWayBinding }} <br>
+    </details>
+    <details open>
+      <summary style="font-size: 30px; font-weight: bold; font-style: italic;">computed</summary>
+      
+      <h3>methods로 데이터 가공</h3>
+      {{ convertMsgF() }}
+
+      <h3>computed로 데이터 가공</h3>
+      {{ convertMsg }}
+    </details>
   </div>
   <script>
     new Vue({
       el: '#app',
       data: {
+        computedMsg: 'Hello',
         onewWayBinding: 'text',
         twowWayBinding: 'text',
         person: {
@@ -80,7 +90,17 @@
         }
         
       },
+      computed: {
+        convertMsg(e) {
+          console.log(e)
+          return this.computedMsg.split("").reverse().join('')
+        },
+      },
       methods: {
+        convertMsgF(e) {
+          console.log(e)
+          return this.computedMsg.split("").reverse().join('')
+        },
         updateText(e) {
           this.onewWayBinding = e.target.value
         },
