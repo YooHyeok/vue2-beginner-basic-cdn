@@ -540,11 +540,13 @@
 </details>
 <details>
   <summary style="font-size:30px; font-weight:bold; font-style:italic;">
-    class 속성 - style 바인딩
+    class & style 속성 바인딩
   </summary>
 
-  Object, Array 형태로 바인딩이 가능하며, 조건부 바인딩을 지원한다. 
+  Object, Array 형태로 바인딩이 가능하며, 여러 형태의 조건부 바인딩을 지원한다. 
   
+  # class 속성
+
   - #### Array 
     기본 형태는 여러개의 클래스를 배열 요소로 나열할 수 있다.  
     컴포넌트 내에서 따로 state로 관리할 수 있다는 장점이 있다.
@@ -718,6 +720,60 @@
       </script>
     </body>
     ```
+  # style 속성
+  state로 관리가 가능하다.
+  이때 주의할점은 `-` 하이픈이 들어간 style 속성의 경우 js 객체의 키 문법상 하이픈을 포함할 수 없으므로 카멜 표기법을 쓰거나, 'xxx-yyy' 형태와 같이 따옴표 등으로 묶어야 적용이 가능하다.  
+  카멜 표기법은 react에서도 동일하게 적용하는것이 바로 위 이유이다.
+  ```html
+  <body>
+      <div id="app">
+        <div 
+          :style="{
+            color: color
+            fontSize: `${fontSize} px` 
+          }"
+        >
+          Hello
+        </div>
+      </div>
+      <script>
+        new Vue({
+          el: '#app',
+          data: {
+            color: 'red',
+            fontSize: 30
+          },
+          
+        })
+      </script>
+    </body>
+  ```
+  위와같이 적용하면 인터렉티브한 UI 효과를 부여할 수 있다.  
+
+  또한 객체 형태로도 관리할 수 있다.
+  ```html
+  <body>
+      <div id="app">
+        <div 
+          :style="style"
+        >
+          Hello
+        </div>
+      </div>
+      <script>
+        new Vue({
+          el: '#app',
+          data: {
+            style: {
+              color: 'red',
+              fontSize: '30px'
+            },
+          },
+          
+        })
+      </script>
+    </body>
+  ```
 </details>
 <details>
   <summary style="font-size:30px; font-weight:bold; font-style:italic;">
