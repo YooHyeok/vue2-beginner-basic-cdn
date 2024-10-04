@@ -56,7 +56,7 @@
         <button type="submit">전송</button>
       </form>
     </details>
-    <!-- 데이터 바인딩 -->
+    <!-- 데이터 바인딩 단방향, 양방향(v-model) -->
     <details>
       <summary style="font-size: 30px; font-weight: bold; font-style: italic;">데이터 바인딩</summary>
       
@@ -68,15 +68,17 @@
       <input type="text" v-model="twowWayBinding"> <br>
       {{ twowWayBinding }} <br>
     </details>
+    <!-- computed -->
     <details >
       <summary style="font-size: 30px; font-weight: bold; font-style: italic;">computed 속성</summary>
       
       <h3>methods로 데이터 가공</h3>
       {{ convertMsgF() }}
-
+      
       <h3>computed로 데이터 가공</h3>
       {{ convertMsg }}
     </details>
+    <!-- watch -->
     <details >
       <summary style="font-size: 30px; font-weight: bold; font-style: italic;">watch 속성</summary>
       
@@ -87,13 +89,12 @@
     <details open>
       <summary style="font-size: 30px; font-weight: bold; font-style: italic;">class style 바인딩</summary>
       
-      
+      <h1>Class 바인딩</h1>
       <h2>기본 바인딩</h2>
       <h3>Object 형태</h3>
       <div 
       :class="{ red: true,
-        'font-bold': true
-      }"
+                'font-bold': true }"
       >
       Hello
     </div>
@@ -108,26 +109,38 @@
       <h3>Object 형태</h3>
       <div 
         :class="{ red: isRed,
-          'font-bold': isBold
-        }"
+                  'font-bold': isBold }"
       >
         Hello
       </div>
       <h3>Array 형태</h3>
       <div 
         :class="[ isRed ? 'red' : '',
-        isBold ? 'font-bold': ''
-        ]"
+                  isBold ? 'font-bold': '' ]"
       >
         Hello
       </div>
       <button @click="update">Click</button>
+
+      <h1>Style 바인딩</h1>
+
+      <div :style="style">
+        Hello
+      </div>
+      
+      <div :style="{color: style.color, fontSize: style.fontSize}">
+        Hello
+      </div>
     </details>
   </div>
   <script>
     new Vue({
       el: '#app',
       data: {
+        style: {
+          color: 'red',
+          fontSize: '30px'
+        },
         isRed: false,
         isBold: false,
         newVal: '',
