@@ -5,10 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>뷰 기초 익히기</title>
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <style>
+    .red {
+      color: red;
+    }
+    .font-bold {
+      font-weight: bold;
+    }
+  </style>
 </head>
 <body>
   <div id="app">
-    
     <h1>state - data</h1>
     {{ nextYear('안녕하세요') }}
 
@@ -49,7 +56,8 @@
         <button type="submit">전송</button>
       </form>
     </details>
-    <details open>
+    <!-- 데이터 바인딩 -->
+    <details>
       <summary style="font-size: 30px; font-weight: bold; font-style: italic;">데이터 바인딩</summary>
       
       <h3>단방향 예제</h3>
@@ -69,18 +77,59 @@
       <h3>computed로 데이터 가공</h3>
       {{ convertMsg }}
     </details>
-    <details open>
+    <details >
       <summary style="font-size: 30px; font-weight: bold; font-style: italic;">watch 속성</summary>
       
       <h3>watch 출력 예제</h3>
       oldVal : {{ oldVal}} <br>
       newVal : {{ newVal}}
     </details>
+    <details open>
+      <summary style="font-size: 30px; font-weight: bold; font-style: italic;">class style 바인딩</summary>
+      
+      
+      <h2>기본 바인딩</h2>
+      <h3>Object 형태</h3>
+      <div 
+      :class="{ red: true,
+        'font-bold': true
+      }"
+      >
+      Hello
+    </div>
+      <h3>Array 형태</h3>
+      <div 
+      :class="[ 'red', 'font-bold']"
+      >
+        Hello
+      </div>
+
+      <h2>조건부 바인딩</h2>
+      <h3>Object 형태</h3>
+      <div 
+        :class="{ red: isRed,
+          'font-bold': isBold
+        }"
+      >
+        Hello
+      </div>
+      <h3>Array 형태</h3>
+      <div 
+        :class="[ isRed ? 'red' : '',
+        isBold ? 'font-bold': ''
+        ]"
+      >
+        Hello
+      </div>
+      <button @click="update">Click</button>
+    </details>
   </div>
   <script>
     new Vue({
       el: '#app',
       data: {
+        isRed: false,
+        isBold: false,
         newVal: '',
         oldVal: '',
         computedMsg: 'Hello',
@@ -112,6 +161,10 @@
         },
       },
       methods: {
+        update() {
+          this.isRed = !this.isRed
+          this.isBold = !this.isBold
+        },
         convertMsgF() {
           return this.computedMsg.split("").reverse().join('')
         },
