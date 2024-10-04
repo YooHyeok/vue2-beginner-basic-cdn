@@ -448,7 +448,7 @@
     또한 computed를 통해 한번 계산된 데이터는 캐싱이라는 기능으로 가져다가 사용할 수 있으며,
     이로 인해 반복적인 함수 호출과 계산을 줄여준다
 
-    ```js
+    ```html
     <body>
       <div id="app">
         {{ convertMsg() }}
@@ -473,7 +473,7 @@
     ```
     위와 같이 메소드를 여러번 호출한다면, 호출할 때 마다 반환한다.
 
-    ```js
+    ```html
     <body>
       <div id="app">
         {{ convertMsg }}
@@ -505,7 +505,7 @@
   </summary>
 
   관찰할 state를 등록한 뒤, 등록 된 state 상태가 변경되면 동작한다.  
-  ```js
+  ```html
   <body>
     <div id="app">
       {{ convertMsg }} <br> <!-- 우로헬 -->
@@ -537,6 +537,187 @@
   </body>
   ```
 
+</details>
+<details>
+  <summary style="font-size:30px; font-weight:bold; font-style:italic;">
+    class 속성 - style 바인딩
+  </summary>
+
+  Object, Array 형태로 바인딩이 가능하며, 조건부 바인딩을 지원한다. 
+  
+  - #### Array 
+    기본 형태는 여러개의 클래스를 배열 요소로 나열할 수 있다.  
+    컴포넌트 내에서 따로 state로 관리할 수 있다는 장점이 있다.
+    ```html
+    <style>
+      .red {color: red;}
+      .font-bold {font-weight: bold;}
+    </style>
+    <body>
+      <div id="app">
+        <div 
+          :class="['red', 'font-bold']"
+        >
+          Hello
+        </div>
+      </div>
+      <script>
+        new Vue({
+          el: '#app',          
+        })
+      </script>
+    </body>
+    ```
+    ```html
+    <style>
+      .red {color: red;}
+      .font-bold {font-weight: bold;}
+    </style>
+    <body>
+      <div id="app">
+        <div 
+          :class="clazz"
+        >
+          Hello
+        </div>
+      </div>
+      <script>
+        new Vue({
+          el: '#app',
+          data : {
+            clazz: ['red', 'font-bold']
+          }          
+        })
+      </script>
+    </body>
+    ```
+
+
+  ## 조건부 바인딩
+
+    - #### Object 
+      ```html
+      <style>
+        .red {color: red;}
+        .font-bold {font-weight: bold;}
+      </style>
+      <body>
+        <div id="app">
+          <div :class="{ red: isRed,
+            'font-bold': isBold
+          }">
+            Hello
+          </div>
+        </div>
+        <script>
+          new Vue({
+            el: '#app',
+            data: {
+              isRed: false,
+              isBold: false,
+            },
+            
+          })
+        </script>
+      </body>
+      ```
+
+  - #### Array 
+    배열의 경우 3항 연산자 형태로 조건부 바인딩을 한다.
+    ```html
+    <style>
+      .red {color: red;}
+      .font-bold {font-weight: bold;}
+    </style>
+    <body>
+      <div id="app">
+        <div 
+          :class="[ 
+            isRed ? 'red' : '',
+            isBold ? 'font-bold': ''
+          ]"
+          :class="[ 
+            isRed && 'red',
+            isBold && 'font-bold'
+          ]"
+        >
+          Hello
+        </div>
+      </div>
+      <script>
+        new Vue({
+          el: '#app',
+          data: {
+            isRed: false,
+            isBold: false,
+          },
+          
+        })
+      </script>
+    </body>
+    ```
+
+    && 혹은 || 연산을 통해 조건부 바인딩도 가능하다.
+    ```html
+    <style>
+      .red {color: red;}
+      .font-bold {font-weight: bold;}
+    </style>
+    <body>
+      <div id="app">
+        <div 
+          :class="[ 
+            isRed && 'red',
+            !isBold || 'font-bold' /* !isBold가 거짓이면 적용 (isBold가 true)*/
+          ]"
+        >
+          Hello
+        </div>
+      </div>
+      <script>
+        new Vue({
+          el: '#app',
+          data: {
+            isRed: false,
+            isBold: false,
+          },
+          
+        })
+      </script>
+    </body>
+    ```
+    배열의 특징을 잘 활용한다면 Object 형태를 담을 수도 있다.
+    ```html
+    <style>
+      .red {color: red;}
+      .font-bold {font-weight: bold;}
+      .back {background-color: blue;}
+    </style>
+    <body>
+      <div id="app">
+        <div 
+          :class="[ 
+            {back: isBack},
+            isRed && 'red',
+            !isBold || 'font-bold'
+          ]"
+        >
+          Hello
+        </div>
+      </div>
+      <script>
+        new Vue({
+          el: '#app',
+          data: {
+            isBack: true,
+            isRed: false,
+            isBold: false,
+          },
+          
+        })
+      </script>
+    </body>
+    ```
 </details>
 <details>
   <summary style="font-size:30px; font-weight:bold; font-style:italic;">
