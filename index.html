@@ -86,7 +86,8 @@
       oldVal : {{ oldVal}} <br>
       newVal : {{ newVal}}
     </details>
-    <details open>
+    <!-- class & style binding -->
+    <details>
       <summary style="font-size: 30px; font-weight: bold; font-style: italic;">class style 바인딩</summary>
       
       <h1>Class 바인딩</h1>
@@ -96,8 +97,8 @@
       :class="{ red: true,
                 'font-bold': true }"
       >
-      Hello
-    </div>
+        Hello
+      </div>
       <h3>Array 형태</h3>
       <div 
       :class="[ 'red', 'font-bold']"
@@ -132,11 +133,35 @@
         Hello
       </div>
     </details>
+    <!-- v-if~else-if~else / v-show -->
+    <details open>
+      <summary style="font-size: 30px; font-weight: bold; font-style: italic;">v-if~else-if~else / v-show</summary>
+
+      <h1>v-if~else</h1>
+      <div v-if="show">YES</div>
+      <div v-else>NO</div>
+
+      <h1>v-if~else-if~else</h1>
+      <template v-if="number === 1">
+        <div>1</div>
+        <div>2</div>
+        <div>3</div>
+      </template>
+      <div v-else-if="number === 2">ELSEIF</div>
+      <div v-else>ELSE</div>
+      <h1>v-show</h1>
+      <div v-show="show">YES</div>
+      <div v-show="!show">NO</div>
+      <button @click="increase">Increase</button>
+      <button @click="toggle">Toggle</button>
+    </details>
   </div>
   <script>
     new Vue({
       el: '#app',
       data: {
+        number: 1,
+        show: true,
         style: {
           color: 'red',
           fontSize: '30px'
@@ -174,6 +199,12 @@
         },
       },
       methods: {
+        increase() {
+          this.number ++;
+        },
+        toggle() {
+          this.show = !this.show;
+        },
         update() {
           this.isRed = !this.isRed
           this.isBold = !this.isBold
