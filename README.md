@@ -1001,6 +1001,68 @@
 </details>
 <details>
   <summary style="font-size:30px; font-weight:bold; font-style:italic;">
+    다중 Vue 인스턴스
+  </summary>
+
+  Vue 인스턴스를 다중으로 구성할 수도 있다.  
+  
+  실무에서는 거의 사용하지 않는다.  
+  
+  Vue 혹은 React는 흔히 SPA 기반으로 알고있다.  
+  만약 다중 인스턴스로 구현한다면, SPA + SPA 개념으로 단순히 접근했을 때 MPA 아키텍처로 정의를 내릴수 있다고 생각한다.  
+  (이때의 MPA는 전통적인 웹 페이지 접근방식과는 차이가 있음.)  
+
+  만약 웹 서비스가 있고, 그 안에 채팅 서비스가 존재한다면, 채팅을 하나의 솔루션 단위로 도메인을 분리할 수 있을 것이다.  
+  채팅이 단순 개발적인 측면에서는 하나의 컴포넌트 정도로 생각할 수 있겠으나, 서비스적인 측면에서는 하나의 솔루션 도메인이 될 수 있다고 생각한다.  
+
+  따라서, 유지보수적 측면에서 해당 서비스를 인스턴스로 분리하여 개발,관리 하는 것을 예로 들 수 있을것 같다.(지극히 주관적인 생각)  
+
+  - #### 예제 코드
+  ```html
+  <body>
+    <div id="app1">
+      {{ name }}
+      {{ age }}
+      <button @click="changeName">Click</button>
+    </div>
+    <div id="app2">
+      {{ name }}
+      {{ age }}
+      <button @click="changeName">Click</button>
+    </div>
+    <script>
+      const app1 = new Vue({
+        el: '#app1',
+        data: {
+          name: 'yooHyeok1',
+          age: '33'
+        },
+        methods: {
+          changeName() {
+            this.name = 'yooHyeok1 updated'
+            app2.age = 'Thirty-Three'
+          }
+        }
+      })
+      const app2 = new Vue({
+        el: '#app2',
+        data: {
+          name: 'yooHyeok2',
+          age: '33'
+        },
+        methods: {
+          changeName() {
+            this.name = 'yooHyeok2 updated'
+            app1.age = '서른셋'
+          }
+        }
+      })
+    </script>
+  </body>
+  ```
+</details>
+<details>
+  <summary style="font-size:30px; font-weight:bold; font-style:italic;">
     목차 접은글 기본 템플릿
   </summary>
 
