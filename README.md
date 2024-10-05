@@ -830,7 +830,17 @@
       </script>
     </body>
     ```
-    
+
+    <details>
+      <summary style="font-size:30px; font-weight:bold; font-style:italic;">
+        template 태그
+      </summary>
+
+      렌더링 되지 않는 컨테이너 요소로, HTML 구조를 그룹화하는데 사용되며, 직접적으로 DOM에 나타나지 않는다.  
+      스타일이나 클래스 속성은 적용되지 않으며, 디렉티브(v-if, v-show, v-for등) 속성만 지원된다.
+    </details>
+
+
   - #### v-show 구문
     ```html
     <body>
