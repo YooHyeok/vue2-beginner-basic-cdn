@@ -879,8 +879,124 @@
 </details>
 <details>
   <summary style="font-size:30px; font-weight:bold; font-style:italic;">
-    목차 접은글 기본 템플릿
+    v-for
   </summary>
+
+  # 배열
+  `v-for="(요소,인덱스) in 배열"` 형태로 사용한다.  
+  이때 필수적으로 key 속성과 같이 사용해야 한다.  
+  key에는 primary한 고유값이 들어가야 한다.  
+  만약 배열의 값이 삭제 혹은 추가되지 않고 단순히 출력만 한다면 index를 사용해도 되지만,
+  배열 요소 중 하나가 삭제가 된다면 index를 재생성 해야 하기 때문에 성능/버그 이슈가 있기 때문이다. (리액트도 마찬가지)  
+
+  - #### 배열 요소 기본 바인딩  
+    ```html
+    <body>
+      <div id="app">
+        <div>
+          {{people[0].name}} {{people[0].age}}
+        </div>
+        <div>
+          {{people[1].name}} {{people[1].age}}
+        </div>
+        <div>
+          {{people[2].name}} {{people[2].age}}
+        </div>
+      </div>
+      <script>
+        new Vue({
+          el: '#app',
+          data: {
+            people: [
+              { id: 1, name: 'a', age: 20 },
+              { id: 2, name: 'b', age: 21 },
+              { id: 3, name: 'c', age: 22 },
+            ],
+          },
+        })
+      </script>
+    </body>
+    ```
+  - #### 배열 요소 v-for 바인딩 (index)  
+    ```html
+    <body>
+      <div id="app">
+        <div v-for="(_, index) in people" :key="_.id">
+          {{people[index].name}} {{people[index].age}}
+        </div>
+      </div>
+      <script>
+        new Vue({
+          el: '#app',
+          data: {
+            people: [
+              { id: 1, name: 'a', age: 20 },
+              { id: 2, name: 'b', age: 21 },
+              { id: 3, name: 'c', age: 22 },
+            ],
+          },
+        })
+      </script>
+    </body>
+    ```
+
+  - #### 배열 요소 v-for 바인딩 (index)  
+    ```html
+    <body>
+      <div id="app">
+        <div v-for="(_, index) in people" :key="_.id">
+          {{people[index].name}} {{people[index].age}}
+        </div>
+      </div>
+      <script>
+        new Vue({
+          el: '#app',
+          data: {
+            people: [
+              { id: 1, name: 'a', age: 20 },
+              { id: 2, name: 'b', age: 21 },
+              { id: 3, name: 'c', age: 22 },
+            ],
+          },
+        })
+      </script>
+    </body>
+    ```
+
+  # 객체
+  객체 또한 각 property의 키, 값에 순차적으로 접근이 가능하다.  
+  `v-for="(키,값,인덱스) in 객체"` 형태로 사용한다.  
+  - #### 객체 요소 v-for 바인딩 (index)  
+    ```html
+    <body>
+      <div id="app">
+        <table border>
+          <thead>
+            <tr>
+              <td v-for="(value, key, index) in people[0]" :key="index">{{key}}</td>
+            </tr>
+          </thead>
+          <tbody v-for="(object, index) in people" :key="object.id">
+            <tr>
+              <td v-for="(value, key, index) in object" :key="index">{{value}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <script>
+        new Vue({
+          el: '#app',
+          data: {
+            people: [
+              { id: 1, name: 'a', age: 20 },
+              { id: 2, name: 'b', age: 21 },
+              { id: 3, name: 'c', age: 22 },
+            ],
+          },
+        })
+      </script>
+    </body>
+    ```
 
 </details>
 <details>
