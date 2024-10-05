@@ -618,7 +618,6 @@
               isRed: false,
               isBold: false,
             },
-            
           })
         </script>
       </body>
@@ -653,7 +652,6 @@
             isRed: false,
             isBold: false,
           },
-          
         })
       </script>
     </body>
@@ -683,7 +681,6 @@
             isRed: false,
             isBold: false,
           },
-          
         })
       </script>
     </body>
@@ -715,7 +712,6 @@
             isRed: false,
             isBold: false,
           },
-          
         })
       </script>
     </body>
@@ -743,7 +739,6 @@
             color: 'red',
             fontSize: 30
           },
-          
         })
       </script>
     </body>
@@ -769,11 +764,114 @@
               fontSize: '30px'
             },
           },
-          
         })
       </script>
     </body>
   ```
+</details>
+<details>
+  <summary style="font-size:30px; font-weight:bold; font-style:italic;">
+    조건부 렌더링 v-if, v-show
+  </summary>
+
+  Vue2는 조건부 렌더링을 지원한다.  
+  `v-if`와 `v-show` 속성을 사용한다.  
+  v-if의 경우 컴포넌트 자체에 대한 렌더링을 결정하기 때문에, 렌더링 당시 혹은 값이 자주 변경되지 않는 경우에 사용을 권장하며,  
+  v-show의 경우 기본 style="display:none" 속성을 제어하므로, 초기 렌더링시점에 무조건 렌더링되며, 값이 자주 변경되는 경우 사용을 권장한다.
+
+  - #### v-if ~ v-else 구문
+    ```html
+    <body>
+      <div id="app">
+        <div v-if="show">YES</div>
+        <div v-else>NO</div>
+        <button @click="toggle">Toggle</button>
+      </div>
+      <script>
+        new Vue({
+          el: '#app',
+          data: {
+            show: true,
+          },
+          methods: {
+            toggle() {
+              this.show = !this.show;
+            },
+          }
+        })
+      </script>
+    </body>
+    ```
+  - #### v-if ~ v-else-if ~ v-else 구문
+    ```html
+    <body>
+      <div id="app">
+        <template v-if="number === 1">
+          <div>1</div>
+          <div>2</div>
+          <div>3</div>
+        </template>
+        <div v-else-if="number === 2">ELSEIF</div>
+        <div v-else>ELSE</div>
+        <button @click="increase">Increase</button>
+      </div>
+      <script>
+        new Vue({
+          el: '#app',
+          data: {
+            number: 1,
+          },
+          methods: {
+            increase() {
+              this.number ++;
+            },
+          }
+        })
+      </script>
+    </body>
+    ```
+    
+  - #### v-show 구문
+    ```html
+    <body>
+      <div id="app">
+        <div v-show="show">YES</div>
+        <div v-show="!show">NO</div>
+        <button @click="toggle">Toggle</button>
+        <template v-show="number === 1">
+          <div>1</div>
+          <div>2</div>
+          <div>3</div>
+        </template>
+        <div v-show="number === 2">number = 2</div>
+        <div v-show="number === 3">number = 3</div>
+        <button @click="increase">Increase</button>
+      </div>
+      <script>
+        new Vue({
+          el: '#app',
+          data: {
+            show: true,
+          },
+          methods: {
+            toggle() {
+              this.show = !this.show;
+            },
+            increase() {
+              this.number ++;
+            },
+          }
+        })
+      </script>
+    </body>
+    ```
+
+</details>
+<details>
+  <summary style="font-size:30px; font-weight:bold; font-style:italic;">
+    목차 접은글 기본 템플릿
+  </summary>
+
 </details>
 <details>
   <summary style="font-size:30px; font-weight:bold; font-style:italic;">
