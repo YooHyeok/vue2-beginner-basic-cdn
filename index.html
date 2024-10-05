@@ -198,7 +198,47 @@
       </table>
     </details>
   </div>
+  <!-- 다중 Vue 인스턴스 -->
+  <details open>
+    <summary style="font-size: 30px; font-weight: bold; font-style: italic;">다중 Vue 인스턴스</summary>
+    <div id="app1">
+      {{ name }}
+      {{ age }}
+      <button @click="changeName">Click</button>
+    </div>
+    <div id="app2">
+      {{ name }}
+      {{ age }}
+      <button @click="changeName">Click</button>
+    </div>
+  </details>
   <script>
+    const app1 = new Vue({
+      el: '#app1',
+      data: {
+        name: 'yooHyeok1',
+        age: '33'
+      },
+      methods: {
+        changeName() {
+          this.name = 'yooHyeok1 updated'
+          app2.age = 'Thirty-Three'
+        }
+      }
+    })
+    const app2 = new Vue({
+      el: '#app2',
+      data: {
+        name: 'yooHyeok2',
+        age: '33'
+      },
+      methods: {
+        changeName() {
+          this.name = 'yooHyeok2 updated'
+          app1.age = '서른셋'
+        }
+      }
+    })
     new Vue({
       el: '#app',
       data: {
