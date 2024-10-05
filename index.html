@@ -134,13 +134,13 @@
       </div>
     </details>
     <!-- v-if~else-if~else / v-show -->
-    <details open>
+    <details >
       <summary style="font-size: 30px; font-weight: bold; font-style: italic;">v-if~else-if~else / v-show</summary>
 
       <h1>v-if~else</h1>
       <div v-if="show">YES</div>
       <div v-else>NO</div>
-
+      
       <h1>v-if~else-if~else</h1>
       <template v-if="number === 1">
         <div>1</div>
@@ -149,17 +149,64 @@
       </template>
       <div v-else-if="number === 2">ELSEIF</div>
       <div v-else>ELSE</div>
+      
       <h1>v-show</h1>
       <div v-show="show">YES</div>
       <div v-show="!show">NO</div>
       <button @click="increase">Increase</button>
       <button @click="toggle">Toggle</button>
     </details>
+    <!-- v-for -->
+    <details open>
+      <summary style="font-size: 30px; font-weight: bold; font-style: italic;">v-for</summary>
+
+      <h1>v-for</h1>
+      <h3>배열 요소 기본 바인딩</h3>
+      <div>
+        {{people[0].name}} {{people[0].age}}
+      </div>
+      <div>
+        {{people[1].name}} {{people[1].age}}
+      </div>
+      <div>
+        {{people[2].name}} {{people[2].age}}
+      </div>
+      <h3>배열 요소 v-for 바인딩</h3>
+      <h5> index 활용 </h5>
+      <div v-for="(_, index) in people" :key="_.id">
+        {{people[index].name}} {{people[index].age}}
+      </div>
+      
+      <h5> object 활용 </h5>
+      <div v-for="(object, index) in people" :key="object.id">
+        {{object.name}} {{object.age}}
+      </div>
+
+
+      <h3>객체 요소 v-for 바인딩</h3>  
+      <table border>
+        <thead>
+          <tr>
+            <td v-for="(value, key, index) in people[0]" :key="index">{{key}}</td>
+          </tr>
+        </thead>
+        <tbody v-for="(object, index) in people" :key="object.id">
+          <tr>
+            <td v-for="(value, key, index) in object" :key="index">{{value}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </details>
   </div>
   <script>
     new Vue({
       el: '#app',
       data: {
+        people: [
+          { id: 1, name: 'a', age: 20 },
+          { id: 2, name: 'b', age: 21 },
+          { id: 3, name: 'c', age: 22 },
+        ],
         number: 1,
         show: true,
         style: {
