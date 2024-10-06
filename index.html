@@ -157,7 +157,7 @@
       <button @click="toggle">Toggle</button>
     </details>
     <!-- v-for -->
-    <details open>
+    <details >
       <summary style="font-size: 30px; font-weight: bold; font-style: italic;">v-for</summary>
 
       <h1>v-for</h1>
@@ -198,23 +198,104 @@
       </table>
     </details>
   </div>
-  <!-- 다중 Vue 인스턴스 -->
+  <!-- 다중 Vue 인스턴스와 컴포넌트 -->
   <details open>
-    <summary style="font-size: 30px; font-weight: bold; font-style: italic;">다중 Vue 인스턴스</summary>
+    <summary style="font-size: 30px; font-weight: bold; font-style: italic;">다중 Vue 인스턴스와 컴포넌트</summary>
     <div id="app1">
+      <h3>Vue 인스턴스</h3>
       {{ name }}
       {{ age }}
       <button @click="changeName">Click</button>
+      <h3>전역 컴포넌트</h3>
+      <hyeok-button></hyeok-button>
+      <h3>지역 컴포넌트</h3>
+      <hyeok-button1></hyeok-button1>
     </div>
     <div id="app2">
+      <h3>Vue 인스턴스</h3>
       {{ name }}
       {{ age }}
       <button @click="changeName">Click</button>
+      <h3>전역 컴포넌트</h3>
+      <hyeok-button></hyeok-button>
+      <h3>지역 컴포넌트</h3>
+      <hyeok-button2></hyeok-button2>
     </div>
   </details>
+
+  <!-- 다중 Vue 인스턴스 -->
   <script>
+    Vue.component('hyeok-button', {
+      template: `
+        <div>
+        {{ name }}
+        {{ age }}
+        <button @click="changeName">Click</button>
+        </div>
+      `,
+      data() {
+        return {
+          name: 'yooHyeok1',
+          age: '33'
+        }
+      },
+      methods: {
+        changeName() {
+          this.name = 'yooHyeok1 updated'
+          this.age = 'Thirty-Three'
+        }
+      }
+    })
+
+    const HyeokButton1 = {
+      template: `
+        <div>
+        {{ name }}
+        {{ age }}
+        <button @click="changeName">Click</button>
+        </div>
+      `,
+      data() {
+        return {
+          name: 'yooHyeok1',
+          age: '33'
+        }
+      },
+      methods: {
+        changeName() {
+          this.name = 'yooHyeok1 updated'
+          this.age = 'Thirty-Three'
+        }
+      }
+    }
+    const HyeokButton2 = {
+      template: `
+        <div>
+        {{ name }}
+        {{ age }}
+        <button @click="changeName">Click</button>
+        </div>
+      `,
+      data() {
+        return {
+          name: 'yooHyeok1',
+          age: '33'
+        }
+      },
+      methods: {
+        changeName() {
+          this.name = 'yooHyeok1 updated'
+          this.age = 'Thirty-Three'
+        }
+      }
+    }
+
+    /* 다중 Vue 인스턴스 --- start */
     const app1 = new Vue({
       el: '#app1',
+      components: {
+        HyeokButton1
+      },
       data: {
         name: 'yooHyeok1',
         age: '33'
@@ -228,6 +309,9 @@
     })
     const app2 = new Vue({
       el: '#app2',
+      components: {
+        HyeokButton2
+      },
       data: {
         name: 'yooHyeok2',
         age: '33'
@@ -239,6 +323,9 @@
         }
       }
     })
+  /* 다중 Vue 인스턴스 --- end */
+  </script>
+  <script>
     new Vue({
       el: '#app',
       data: {
