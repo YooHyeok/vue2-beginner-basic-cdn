@@ -1,4 +1,4 @@
-# Vue 2 기초
+# Vue 2 기초(CDN)
 
 <details>
   <summary style="font-size:30px; font-weight:bold; font-style:italic;">
@@ -1001,8 +1001,10 @@
 </details>
 <details>
   <summary style="font-size:30px; font-weight:bold; font-style:italic;">
-    다중 Vue 인스턴스
+    다중 Vue 인스턴스와 컴포넌트
   </summary>
+
+- ## 다중 Vue 인스턴스
 
   Vue 인스턴스를 다중으로 구성할 수도 있다.  
   
@@ -1060,6 +1062,205 @@
     </script>
   </body>
   ```
+
+- ## 다중 Vue 인스턴스와 컴포넌트
+  다중 Vue 인스턴스에서 컴포넌트를 사용할때도, 일반적인 컴포넌트의 특성과 같이
+  중복으로 동일한 내용이 자주 사용될 때 해당 영역을 컴포넌트로 추출하여
+  공통적으로 편리하게 사용할 수 있다는 장점이 있다.
+
+  컴포넌트는 일반적으로 전역 컴포넌트와 지역 컴포넌트로 나뉜다.
+  전역 컴포넌트의 경우 선언해서 사용하지 않더라도 빌드시 코드가 포함된다.
+  따라서 지역 컴포넌트로 사용해야 한다.
+
+  다중 Vue 인스턴스에서 인스턴스간의 데이터 공유와는 다르게
+  컴포넌트간의 데이터 공유는 지역 컴포넌트든 전역 컴포넌트든 값이 공유되지 않는다.
+  이때는 전역 객체(Vuex 등)를 통해 값을 공유해야만 한다.  
+  (컴포넌트로 작성할때 주의할 사항은 data 속성 정의시 반환형 함수 형태로 작성해야 한다.)  
+
+  - 전역 컴포넌트
+    `Vue.component('컴포넌트-이름', {template: `<태그>`, 속성(훅)})` 형태로 작성한다.
+
+    ```html
+    <body>
+      <div id="app1">
+        <h3>Vue 인스턴스</h3>
+        {{ name }}
+        {{ age }}
+        <button @click="changeName">Click</button>
+        <h3>전역 컴포넌트</h3>
+        <hyeok-button></hyeok-button>
+      </div>
+      <div id="app2">
+        <h3>Vue 인스턴스</h3>
+        {{ name }}
+        {{ age }}
+        <button @click="changeName">Click</button>
+        <h3>전역 컴포넌트</h3>
+        <hyeok-button></hyeok-button>
+      </div>
+      <script>
+        /* 전역 컴포넌트 */
+        Vue.component('hyeok-button', {
+          template: `
+            <div>
+            {{ name }}
+            {{ age }}
+            <button @click="changeName">Click</button>
+            </div>
+          `,
+          data() {
+            return {
+              name: 'yooHyeok1',
+              age: '33'
+            }
+          },
+          methods: {
+            changeName() {
+              this.name = 'yooHyeok1 updated'
+              this.age = 'Thirty-Three'
+            }
+          }
+        })
+
+        /* 다중 Vue 인스턴스 --- start */
+        const app1 = new Vue({
+          el: '#app1',
+          data: {
+            name: 'yooHyeok1',
+            age: '33'
+          },
+          methods: {
+            changeName() {
+              this.name = 'yooHyeok1 updated'
+              app2.age = 'Thirty-Three'
+            }
+          }
+        })
+        const app2 = new Vue({
+          el: '#app2',
+          data: {
+            name: 'yooHyeok2',
+            age: '33'
+          },
+          methods: {
+            changeName() {
+              this.name = 'yooHyeok2 updated'
+              app1.age = '서른셋'
+            }
+          }
+        })
+      /* 다중 Vue 인스턴스 --- end */
+      </script>
+    </body>
+    ```
+    버튼을 아무리 클릭해도 각 소속 인스턴스에 독립적으로 적용되기 때문에 값이 서로 공유되지 않는다.  
+
+  - 지역 컴포넌트
+    `const 변수 = {template: `<태그>`, 속성(훅)})` 형태로 작성한다.  
+    지역 컴포넌트의 경우 전역 컴포넌트와 다르게 뷰 인스턴스나 상위 컴포넌트에서 사용할 때 components 속성을 통해 컴포넌트를 참조해야한다.  
+    `components: { 지역컴포넌트변수 }`
+    ```html
+    <body>
+      <div id="app1">
+        <h3>Vue 인스턴스</h3>
+        {{ name }}
+        {{ age }}
+        <button @click="changeName">Click</button>
+        <h3>지역 컴포넌트</h3>
+        <hyeok-button1></hyeok-button1>
+      </div>
+      <div id="app2">
+        <h3>Vue 인스턴스</h3>
+        {{ name }}
+        {{ age }}
+        <button @click="changeName">Click</button>
+        <h3>지역 컴포넌트</h3>
+        <hyeok-button2></hyeok-button2>
+      </div>
+      <script>
+        /* 지역 컴포넌트 */
+        const HyeokButton1 = {
+          template: `
+            <div>
+            {{ name }}
+            {{ age }}
+            <button @click="changeName">Click</button>
+            </div>
+          `,
+          data() {
+            return {
+              name: 'yooHyeok1',
+              age: '33'
+            }
+          },
+          methods: {
+            changeName() {
+              this.name = 'yooHyeok1 updated'
+              this.age = 'Thirty-Three'
+            }
+          }
+        }
+        const HyeokButton2 = {
+          template: `
+            <div>
+            {{ name }}
+            {{ age }}
+            <button @click="changeName">Click</button>
+            </div>
+          `,
+          data() {
+            return {
+              name: 'yooHyeok1',
+              age: '33'
+            }
+          },
+          methods: {
+            changeName() {
+              this.name = 'yooHyeok1 updated'
+              this.age = 'Thirty-Three'
+            }
+          }
+        }
+
+        /* 다중 Vue 인스턴스 --- start */
+        const app1 = new Vue({
+          el: '#app1',
+          components: {
+            HyeokButton1 // 지역 컴포넌트 등록
+          },
+          data: {
+            name: 'yooHyeok1',
+            age: '33'
+          },
+          methods: {
+            changeName() {
+              this.name = 'yooHyeok1 updated'
+              app2.age = 'Thirty-Three'
+            }
+          }
+        })
+        const app2 = new Vue({
+          el: '#app2',
+          components: {
+            HyeokButton2 // 지역 컴포넌트 등록
+          },
+          data: {
+            name: 'yooHyeok2',
+            age: '33'
+          },
+          methods: {
+            changeName() {
+              this.name = 'yooHyeok2 updated'
+              app1.age = '서른셋'
+            }
+          }
+        })
+      /* 다중 Vue 인스턴스 --- end */
+      </script>
+    </body>
+    ```
+    버튼을 아무리 클릭해도 각 소속 인스턴스에 독립적으로 적용되기 때문에 값이 서로 공유되지 않는다.  
+
 </details>
 <details>
   <summary style="font-size:30px; font-weight:bold; font-style:italic;">
