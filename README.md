@@ -1076,7 +1076,7 @@
   컴포넌트간의 데이터 공유는 지역 컴포넌트든 전역 컴포넌트든 값이 공유되지 않는다.
   이때는 전역 객체(Vuex 등)를 통해 값을 공유해야만 한다.  
   (컴포넌트로 작성할때 주의할 사항은 data 속성 정의시 반환형 함수 형태로 작성해야 한다.)  
-
+  
   - 전역 컴포넌트
     `Vue.component('컴포넌트-이름', {template: `<태그>`, 속성(훅)})` 형태로 작성한다.
 
@@ -1260,6 +1260,96 @@
     </body>
     ```
     버튼을 아무리 클릭해도 각 소속 인스턴스에 독립적으로 적용되기 때문에 값이 서로 공유되지 않는다.  
+
+  - ## ref와 $refs
+    만약 위와같은 상황에서 $refs를 사용하면 지역 컴포넌트간 값 접근은 가능하다!
+    - ref & $refs 적용
+    ```html
+    <body>
+      <div id="app1">
+        <h3>지역 컴포넌트</h3>
+        <hyeok-button1 ref="hyeok1"></hyeok-button1>
+      </div>
+      <div id="app2">
+        <h3>지역 컴포넌트</h3>
+        <hyeok-button2 ref="hyeok2"></hyeok-button2>
+      </div>
+      <script>
+        /* 지역 컴포넌트 */
+        const HyeokButton1 = {
+          template: `
+            <div>
+            {{ name }}
+            {{ age }}
+            <button @click="changeName">Click</button>
+            </div>
+          `,
+          data() {
+            return {
+              name: 'yooHyeok1',
+              age: '33'
+            }
+          },
+          methods: {
+            changeName() {
+              this.name = 'yooHyeok1 updated'
+              this.age = 'Thirty-Three'
+              app2.$refs.hyeok2.age = "메롱"
+            }
+          }
+        }
+        const HyeokButton2 = {
+          template: `
+            <div>
+            {{ name }}
+            {{ age }}
+            <button @click="changeName">Click</button>
+            </div>
+          `,
+          data() {
+            return {
+              name: 'yooHyeok1',
+              age: '33'
+            }
+          },
+          methods: {
+            changeName() {
+              this.name = 'yooHyeok1 updated'
+              this.age = 'Thirty-Three'
+              app2.$refs.hyeok1.age = "메롱"
+            }
+          }
+        }
+
+        /* 다중 Vue 인스턴스 --- start */
+        const app1 = new Vue({
+          el: '#app1',
+          components: {
+            HyeokButton1 // 지역 컴포넌트 등록
+          },
+          methods: {
+            changeName() {
+              this.name = 'yooHyeok1 updated'
+              app2.age = 'Thirty-Three'
+            }
+          }
+        })
+        const app2 = new Vue({
+          el: '#app2',
+          components: {
+            HyeokButton2 // 지역 컴포넌트 등록
+          },
+          methods: {
+            changeName() {
+              this.name = 'yooHyeok2 updated'
+              app1.age = '서른셋'
+            }
+          }
+        })
+      /* 다중 Vue 인스턴스 --- end */
+      </script>
+    </body>
+    ```
 
 </details>
 <details>
