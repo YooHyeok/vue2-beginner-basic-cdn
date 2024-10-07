@@ -209,7 +209,7 @@
       <h3>전역 컴포넌트</h3>
       <hyeok-button></hyeok-button>
       <h3>지역 컴포넌트</h3>
-      <hyeok-button1></hyeok-button1>
+      <hyeok-button1 ref="hyeok1"></hyeok-button1>
     </div>
     <div id="app2">
       <h3>Vue 인스턴스</h3>
@@ -219,7 +219,7 @@
       <h3>전역 컴포넌트</h3>
       <hyeok-button></hyeok-button>
       <h3>지역 컴포넌트</h3>
-      <hyeok-button2></hyeok-button2>
+      <hyeok-button2 ref="hyeok2"></hyeok-button2>
     </div>
   </details>
 
@@ -265,6 +265,7 @@
         changeName() {
           this.name = 'yooHyeok1 updated'
           this.age = 'Thirty-Three'
+          app2.$refs.hyeok2.age = "메롱"
         }
       }
     }
@@ -286,6 +287,7 @@
         changeName() {
           this.name = 'yooHyeok1 updated'
           this.age = 'Thirty-Three'
+          app1.$refs.hyeok1.name = "즐똥"
         }
       }
     }
