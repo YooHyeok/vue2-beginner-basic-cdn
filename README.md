@@ -1354,7 +1354,43 @@
 </details>
 <details>
   <summary style="font-size:30px; font-weight:bold; font-style:italic;">
-    목차 접은글 기본 템플릿
+    지역 컴포넌트 파일 분리 및 참조
   </summary>
 
+  CDN에서도 지역 컴포넌트를 파일로 분리한 뒤 인스턴스나 부모 컴포넌트에서 참조가 가능하다!  
+  
+  - 지역컴포넌트.js
+  ```js
+  export default {
+    template: `
+        <div>
+          지역 컴포넌트자나아!
+        </div>
+      `,
+      data() {
+        return {
+        }
+      },
+      methods: {
+      }
+  }
+  ```
+  - 뷰인스턴스.js
+  ```html
+  <body>
+    <div id="app1">
+      <지역컴포넌트/>
+    </div>
+    <script>
+      import 지역컴포넌트 from "./지역컴포넌트.js"
+
+      new Vue({
+        el: '#app1',
+        components: {
+          지역컴포넌트 // 지역 컴포넌트 등록
+        },
+      })
+    </script>
+  </body>
+  ```
 </details>
