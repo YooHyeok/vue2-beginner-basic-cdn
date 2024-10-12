@@ -136,13 +136,17 @@
   - 템플릿에서 this 생략  
   Vue 템플릿 컴파일러가 자동으로 this를 처리하기 때문에 템플릿에서 this를 명시하지 않아도 Vue 인스턴스의 속성에 접근할 수 있다.  
   이는 가독성을 높이고 코드를 간결하게 만들기 위한 설계이다.
+</details>
+<details>
+  <summary style="font-size:30px; font-weight:bold; font-style:italic;">
+    v-bind과 데이터 바인딩
+  </summary>
 
-  # *v-bind*
   Dom element 속성에 값을 바인딩 시켜준다.  
   `v-bind:속성=값` 혹은 축약형인 `:속성=값` 형태로 사용한다.  
 
   a 태그로 예시 코드를 작성한다.  
-  ```js
+  ```html
   <body>
     <div id="app">
       <a v-bind:href="link"> {{ title }} </a>
@@ -163,7 +167,7 @@
 
   ## Method 바인딩
   return 형태의 메소드 바인딩도 가능하다.
-  ```js
+  ```html
   <body>
     <div id="app">
       <a :href="getYooHyeokSchoolLink('u-it')"> {{ title }} </a> <!-- 축약형 -->
@@ -192,7 +196,7 @@
   *단, 축약형은 적용되지 않는다. (콘솔 Error 발생)*
 
   - ### Attributes
-    ```js
+    ```html
     <!-- 생략 -->
     <body>
       <div id="app">
@@ -226,12 +230,12 @@
     }
     ```
 
-    - ### Props
+  - ### Props
     Object 바인딩의 경우 커스텀 컴포넌트에 Props로 넘길수도 있다.  
     특징은, 부모 컴포넌트에서 v-bind 적용시 속성명을 입력하지 않을 경우 해당 Object의 각 property가  
     개별적으로 props로 넘어간다.
 
-    ```js
+    ```html
     <body>
       <div id="app">
         <ExComponent v-bind="propsInputAttrProps">
@@ -304,7 +308,7 @@
   (react와는 다르게 익명함수를 먼저 선언하고도, 전역객체에 접근할 수 없다.)  
   따라서, methods에 함수를 정의한 뒤 해당 함수를 통해 호출하도록 코드를 작성해야 한다.  
 
-  ```js
+  ```html
   <body>
     <div id="app">
       <button type="alert">Alert!</button>
@@ -332,7 +336,7 @@
   JavaScript → HTML 한 방향으로만 데이터를 동기화 하는 것을 의미한다.  
   value와 event를 함께 바인딩한다.  
   keyup 혹은 change 등의 이벤트 함수를 통해 target value에 접근하여 value에 바인딩한 변수를 초기화한다.  
-  ```js
+  ```html
   <body>
     <div id="app">
       <input type="text" :value="onewWayBinding" v-on:keyup="updateText"> <br>
@@ -360,7 +364,7 @@
   단방향 에서 event와 같은 js 코드가 필요없이 ViewModel로 사용될 state 변수 하나만 사용한다.
   v-model 속성을 사용한다.  
   `v-model=state변수명`
-  ```js
+  ```html
   <body>
     <div id="app">
       <input type="text" v-model="twowWayBinding"> <br>
@@ -382,13 +386,13 @@
     computed 속성
   </summary>
 
-  ```js
+  ```html
   <div>
     {{ number+1 }}
   </div>
   ```
   템플릿 내에 표현식을 넣으면 편리하다.  
-  ```js
+  ```html
   <div>
     {{ message.split("").reverse().join('') }}
   </div>
@@ -400,7 +404,7 @@
     computed 속성에 함수를 선언하고, state에 접근하여 데이터를 가공한 뒤 가공한 데이터를 반환한다.  
     이때, 함수명은 template에서 변수명으로 사용할 수 있게 된다.
     **주의할 점은 computed속성에 선언한 함수는 함수로서 호출할 수 없고 변수로써 사용한다.**
-    ```js
+    ```html
     <body>
       <div id="app">
         {{ convertMsg }}
@@ -424,22 +428,24 @@
 
     커스텀으로 getter와 setter를 제공하지만, 예제에서는 이를 하나의 메소드로 적용하였다.
     ```js
-    computed: {
-      convertMsg: {
-        get() {
-          console.log("get")
-          return this.computedMsg
-        },
-        set(value) {
-          console.log("set : ", value)
-          this.computedMsg = value.split("").reverse().join('')
+    export default {
+      computed: {
+        convertMsg: {
+          get() {
+            console.log("get")
+            return this.computedMsg
+          },
+          set(value) {
+            console.log("set : ", value)
+            this.computedMsg = value.split("").reverse().join('')
+          },
+        }
+      },
+      methods: {
+        convertMsgF(newValue) {
+          return this.convertMsg = newValue
         },
       }
-    },
-    methods: {
-      convertMsgF(newValue) {
-        return this.convertMsg = newValue
-      },
     }
     ```
     computed의 convertMsg의 변경이 감지되면 convertMsg의 convertMsg를 value로 받아온 뒤 state에 초기화 한다.
